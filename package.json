@@ -1,0 +1,19 @@
+{
+  "name": "el-telegram-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node index --presets=env"
+  },
+  "author": "Vadim Nicolaev",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "node-telegram-bot-api": "^0.29.0"
+  },
+  "devDependencies": {
+    "eslint-config-rallycoding": "^3.2.0"
+  }
+}
