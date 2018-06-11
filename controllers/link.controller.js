@@ -21,31 +21,46 @@ module.exports.getShortLink = (bot) => async (msg, match) => {
 }
 
 module.exports.inlineQuery = (bot) => async (msg) => {
-    var q_id = msg.id;
-    var q_query = msg.query;
-//  var q_from = msg.from;
-//  var q_offset = msg.offset;
+    const q_id = msg.id;
+    const q_query = msg.query;
+    const {
+        linkRegExp
+    } = regExp;
+    console.log(q_query);
+    console.log(linkRegExp.test(q_query));
+    if (!linkRegExp.test(q_query)) {
+        let results = [];
 
-    var results = [];
-
-    for (var i = 0; i < 10; ++i) {
-        var InlineQueryResultPhoto = {
-            'type': 'article', 
-            'id': +Date.now() + '' + i,
-            'title': 'Short Link',
-            'input_message_content': {
-                'message_text': 'some cool text',
-                'disable_web_page_preview': true
-            },
-            'url': 'http://google.com',
+        let InlineQueryResultPhoto = {
+            'type': 'photo', 
+            'photo_url': 'https://climatefeedback.org/wp-content/uploads/tags/HTag_Incorrect.png',
+            'thumb_url': 'https://climatefeedback.org/wp-content/uploads/tags/HTag_Incorrect.png',
+            'id': +Date.now(),
+            'photo_width': 200,
+            'photo_height': 200
         };
-        results.push(InlineQueryResultPhoto);
-    }
 
-    try {
-        bot.answerInlineQuery(q_id, results, {switch_pm_text:'SHORT LINK',switch_pm_parameter:'x'});
-    } catch (err) {
-        console.log('it is error');
-        console.log(err);
+    
+        results.push(InlineQueryResultPhoto);
+    
+        bot.answerInlineQuery(q_id, results, {switch_pm_text:'INCORRECT LINK ',switch_pm_parameter:'x'});
+        return;
     }
+    
+    let results = [];
+
+    let InlineQueryResultPhoto = {
+        'type': 'article', 
+        'id': +Date.now(),
+        'title': 'http://google.com',
+        'input_message_content': {
+            'message_text': 'some cool text',
+            'disable_web_page_preview': true
+        },
+        'url': 'http://google.com',
+    };
+
+    results.push(InlineQueryResultPhoto);
+
+    bot.answerInlineQuery(q_id, results, {switch_pm_text:'SHORT LINK ',switch_pm_parameter:'x'});
 }
