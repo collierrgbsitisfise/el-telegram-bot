@@ -34,23 +34,18 @@ module.exports.inlineQuery = (bot) => async (msg) => {
         
         return;
     }
-    
+        
     let shortLink = await createShortLink(query);
     
-    let results = [];
-
-    let InlineQueryResultPhoto = {
+    let InlineQueryResultShortLink = {
         'type': 'article', 
         'id': +Date.now(),
         'title': shortLink,
         'input_message_content': {
             'message_text': shortLink,
             'disable_web_page_preview': true
-        },
-        'url': 'http://google.com',
+        }
     };
 
-    results.push(InlineQueryResultPhoto);
-
-    bot.answerInlineQuery(id, results, {switch_pm_text:'SHORT LINK ',switch_pm_parameter:'x'});
+    bot.answerInlineQuery(id, [InlineQueryResultShortLink], {switch_pm_text:'SHORT LINK ',switch_pm_parameter:'x'});
 }
