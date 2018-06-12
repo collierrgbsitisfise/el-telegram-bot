@@ -1,4 +1,4 @@
-import { regExp } from './../helpers/index';
+import { regExp,inlineQueryResp } from './../helpers/index';
 import {
   createShortLink
 } from './../service/api.service';
@@ -21,29 +21,20 @@ module.exports.getShortLink = (bot) => async (msg, match) => {
 }
 
 module.exports.inlineQuery = (bot) => async (msg) => {
-    const q_id = msg.id;
-    const q_query = msg.query;
+    const { id, query } = msg;
     const {
         linkRegExp
     } = regExp;
-    console.log(q_query);
-    console.log(linkRegExp.test(q_query));
-    if (!linkRegExp.test(q_query)) {
+
+    if (!linkRegExp.test(query)) {
         let results = [];
 
-        let InlineQueryResultPhoto = {
-            'type': 'photo', 
-            'photo_url': 'https://climatefeedback.org/wp-content/uploads/tags/HTag_Incorrect.png',
-            'thumb_url': 'https://climatefeedback.org/wp-content/uploads/tags/HTag_Incorrect.png',
-            'id': +Date.now(),
-            'photo_width': 200,
-            'photo_height': 200
-        };
+        let  { invalidLink } = inlineQueryResp;
 
     
-        results.push(InlineQueryResultPhoto);
+        results.push(invalidLink);
     
-        bot.answerInlineQuery(q_id, results, {switch_pm_text:'INCORRECT LINK ',switch_pm_parameter:'x'});
+        bot.answerInlineQuery(id, results, {switch_pm_text:'INCORRECT LINK ',switch_pm_parameter:'x'});
         return;
     }
     
@@ -62,5 +53,5 @@ module.exports.inlineQuery = (bot) => async (msg) => {
 
     results.push(InlineQueryResultPhoto);
 
-    bot.answerInlineQuery(q_id, results, {switch_pm_text:'SHORT LINK ',switch_pm_parameter:'x'});
+    bot.answerInlineQuery(id, results, {switch_pm_text:'SHORT LINK ',switch_pm_parameter:'x'});
 }
