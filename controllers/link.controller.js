@@ -27,25 +27,24 @@ module.exports.inlineQuery = (bot) => async (msg) => {
     } = regExp;
 
     if (!linkRegExp.test(query)) {
-        let results = [];
 
         let  { invalidLink } = inlineQueryResp;
-
     
-        results.push(invalidLink);
-    
-        bot.answerInlineQuery(id, results, {switch_pm_text:'INCORRECT LINK ',switch_pm_parameter:'x'});
+        bot.answerInlineQuery(id, [invalidLink], {switch_pm_text:'INCORRECT LINK ',switch_pm_parameter:'x'});
+        
         return;
     }
+    
+    let shortLink = await createShortLink(query);
     
     let results = [];
 
     let InlineQueryResultPhoto = {
         'type': 'article', 
         'id': +Date.now(),
-        'title': 'http://google.com',
+        'title': shortLink,
         'input_message_content': {
-            'message_text': 'some cool text',
+            'message_text': shortLink,
             'disable_web_page_preview': true
         },
         'url': 'http://google.com',
