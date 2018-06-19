@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "babel-node": "babel-node --presets=env",
-    "start": "nodemon --exec npm run babel-node -- ./index.js"
+    "babel-node-prod": "BOT_STAGE=production babel-node --presets=env",
+    "babel-node-dev": "BOT_STAGE=dev babel-node --presets=env",
+    "start": "nodemon --exec npm run babel-node-dev -- ./index.js",
+    "start-prod": "nodemon --exec npm run babel-node-prod -- ./index.js"
   },
   "author": "Vadim Nicolaev",
   "license": "ISC",

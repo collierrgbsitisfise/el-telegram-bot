@@ -1,5 +1,11 @@
 import rp from 'request-promise';
-import { EL_API_URL, EL_API_PORT, API_PREFIX } from './../config/config';
+import settings from './../config/config';
+
+const {
+    EL_API_URL,
+    EL_API_PORT,
+    API_PREFIX
+} = settings;
 
 module.exports.createShortLink = async (link) => {
     const options = {
