@@ -19,7 +19,7 @@ module.exports.createShortLink = async (link) => {
 
     try {
         const { shortLinkHash } = await rp(options);
-        return `${EL_API_URL}:${EL_API_PORT}${API_PREFIX}/redirect-es-link/${shortLinkHash}`;
+        return `${EL_API_URL}/${shortLinkHash}`;
     } catch (err) {
         return 'oops some errors on our side 🔥🔥🔥🔥🔥🔥';
     }
