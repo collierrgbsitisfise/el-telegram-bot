@@ -7,7 +7,8 @@
     "babel-node-prod": "BOT_STAGE=production babel-node --presets=env",
     "babel-node-dev": "BOT_STAGE=dev babel-node --presets=env",
     "start": "nodemon --exec npm run babel-node-dev -- ./index.js",
-    "start-prod": "nodemon --exec npm run babel-node-prod -- ./index.js"
+    "start-prod": "nodemon --exec npm run babel-node-prod -- ./index.js",
+    "pm2-start": "pm2 start npm -- run start-prod --interpreter ./node_modules/.bin/babel-node"
   },
   "author": "Vadim Nicolaev",
   "license": "ISC",
