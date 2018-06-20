@@ -8,7 +8,7 @@
     "babel-node-dev": "BOT_STAGE=dev babel-node --presets=env",
     "start": "nodemon --exec npm run babel-node-dev -- ./index.js",
     "start-prod": "nodemon --exec npm run babel-node-prod -- ./index.js",
-    "pm2-start": "pm2 start npm -- run start-prod --interpreter ./node_modules/.bin/babel-node"
+    "pm2-start": "pm2 start npm -- run start-prod --interpreter ./node_modules/.bin/babel-node --name el-telegram-bot"
   },
   "author": "Vadim Nicolaev",
   "license": "ISC",
