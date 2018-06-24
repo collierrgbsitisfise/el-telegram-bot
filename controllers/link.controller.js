@@ -1,6 +1,7 @@
 import { regExp,inlineQueryResp } from './../helpers/index';
 import {
-  createShortLink
+  createShortLink,
+  createPrivateShortLink
 } from './../service/api.service';
 
 module.exports.getShortLink = (bot) => async (msg, match) => {
@@ -20,6 +21,23 @@ module.exports.getShortLink = (bot) => async (msg, match) => {
         bot.sendMessage(chatId, res);
 }
 
+module.exports.getPrivateShortLink = (bot) => async (msg, match) => {
+    const {
+        linkRegExp
+    } = regExp;
+
+    const chatId = msg.chat.id;
+    const link = match[1];
+
+    if (!linkRegExp.test(link)) {
+        bot.sendMessage(chatId, 'mmmm.... invalid link 😞😞😞');
+        return;
+    }
+
+    let res = await createPrivateShortLink(link);
+    bot.sendMessage(chatId, res);
+}
+
 module.exports.inlineQuery = (bot) => async (msg) => {
     const { id, query } = msg;
     const {
@@ -36,16 +54,27 @@ module.exports.inlineQuery = (bot) => async (msg) => {
     }
         
     let shortLink = await createShortLink(query);
-    
+    let privateShortLink = await createPrivateShortLink(query);
+
     let InlineQueryResultShortLink = {
         'type': 'article', 
         'id': +Date.now(),
-        'title': shortLink,
+        'title': 'Short Link',
         'input_message_content': {
             'message_text': shortLink,
             'disable_web_page_preview': true
         }
     };
 
-    bot.answerInlineQuery(id, [InlineQueryResultShortLink], {switch_pm_text:'SHORT LINK ',switch_pm_parameter:'x'});
+    let InlineQueryResultPrivateShortLink = {
+        'type': 'article', 
+        'id': +Date.now() + 1,
+        'title': 'Private Short Link',
+        'input_message_content': {
+            'message_text': privateShortLink,
+            'disable_web_page_preview': true
+        }
+    } 
+
+    bot.answerInlineQuery(id, [InlineQueryResultShortLink,InlineQueryResultPrivateShortLink], {switch_pm_text:'SHORT LINK ',switch_pm_parameter:'x'});
 }
