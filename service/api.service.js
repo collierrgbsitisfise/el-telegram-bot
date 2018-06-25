@@ -43,3 +43,22 @@ module.exports.createPrivateShortLink = async (link) => {
         return 'oops some errors on our side 🔥🔥🔥🔥🔥🔥';
     }
 }
+
+module.exports.createOnceAvailableShortLink = async (link) => {
+    const options = {
+        method: 'GET',
+        uri: `${EL_API_URL}:${EL_API_PORT}${API_PREFIX}/create-es-link`,
+        qs: {
+            link,
+            onceAvailable: true
+        },
+        json: true
+    }
+
+    try {
+        const { shortLinkHash } = await rp(options);
+        return `${EL_API_URL}/${shortLinkHash}`;
+    } catch (err) {
+        return 'oops some errors on our side 🔥🔥🔥🔥🔥🔥';
+    }
+}

@@ -1,7 +1,8 @@
 import { regExp,inlineQueryResp } from './../helpers/index';
 import {
   createShortLink,
-  createPrivateShortLink
+  createPrivateShortLink,
+  createOnceAvailableShortLink
 } from './../service/api.service';
 
 module.exports.getShortLink = (bot) => async (msg, match) => {
@@ -38,6 +39,23 @@ module.exports.getPrivateShortLink = (bot) => async (msg, match) => {
     bot.sendMessage(chatId, res);
 }
 
+module.exports.getOnceAvailableLink = (bot) => async (msg, match) => {
+    const {
+        linkRegExp
+    } = regExp;
+
+    const chatId = msg.chat.id;
+    const link = match[1];
+
+    if (!linkRegExp.test(link)) {
+        bot.sendMessage(chatId, 'mmmm.... invalid link 😞😞😞');
+        return;
+    }
+
+    let res = await createOnceAvailableShortLink(link);
+    bot.sendMessage(chatId, res);
+}
+
 module.exports.inlineQuery = (bot) => async (msg) => {
     const { id, query } = msg;
     const {
@@ -55,6 +73,7 @@ module.exports.inlineQuery = (bot) => async (msg) => {
         
     let shortLink = await createShortLink(query);
     let privateShortLink = await createPrivateShortLink(query);
+    let onceAvailableLink = await createOnceAvailableShortLink(query);
 
     let InlineQueryResultShortLink = {
         'type': 'article', 
@@ -74,7 +93,23 @@ module.exports.inlineQuery = (bot) => async (msg) => {
             'message_text': privateShortLink,
             'disable_web_page_preview': true
         }
-    } 
+    };
 
-    bot.answerInlineQuery(id, [InlineQueryResultShortLink,InlineQueryResultPrivateShortLink], {switch_pm_text:'SHORT LINK ',switch_pm_parameter:'x'});
+    let InlineQueryResultOnceAvailableShortLink = {
+        'type': 'article', 
+        'id': +Date.now() + 2,
+        'title': 'Once available Short Link',
+        'input_message_content': {
+            'message_text': onceAvailableLink,
+            'disable_web_page_preview': true
+        }
+    }
+
+    bot.answerInlineQuery(
+        id,
+        [InlineQueryResultShortLink,
+        InlineQueryResultPrivateShortLink,
+        InlineQueryResultOnceAvailableShortLink],
+        {switch_pm_text:'SHORT LINK ',switch_pm_parameter:'x'}
+    );
 }
