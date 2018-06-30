@@ -5,6 +5,13 @@ import {
   createOnceAvailableShortLink
 } from './../service/api.service';
 
+module.exports.getHelpInfo = (bot) => async (msg) => {
+    const chatId = msg.chat.id;
+    bot.sendMessage(chatId, '/link <link name> : create short link');
+    bot.sendMessage(chatId, '/once_available_link <link name> : create short and once available link');
+    bot.sendMessage(chatId, '/private_link <link name> : create short and private(wich available from private[incognito] browser mode) link');
+}
+
 module.exports.getShortLink = (bot) => async (msg, match) => {
         const {
             linkRegExp
