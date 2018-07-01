@@ -1,15 +1,30 @@
-import { regExp,inlineQueryResp } from './../helpers/index';
+import { regExp,inlineQueryResp,cmd } from './../helpers/index';
 import {
   createShortLink,
   createPrivateShortLink,
   createOnceAvailableShortLink
 } from './../service/api.service';
 
+module.exports.getStartInfo = (bot) => async (msg) => {
+    const chatId = msg.chat.id;
+    bot.sendMessage(chatId, cmd.start.ru, {
+        parse_mode: 'html'
+    });
+    bot.sendMessage(chatId, cmd.start.en, {
+        parse_mode: 'html'
+    });
+}
+
 module.exports.getHelpInfo = (bot) => async (msg) => {
     const chatId = msg.chat.id;
-    bot.sendMessage(chatId, '/link <link name> : create short link');
-    bot.sendMessage(chatId, '/once_available_link <link name> : create short and once available link');
-    bot.sendMessage(chatId, '/private_link <link name> : create short and private(wich available from private[incognito] browser mode) link');
+    bot.sendMessage(chatId, '/link <link> : create short link (🇺🇸)');
+    bot.sendMessage(chatId, '/once_available_link <link> : create short and once available link (🇺🇸)');
+    bot.sendMessage(chatId, '/private_link <link> : create short and private(wich available from private[incognito] browser mode) link (🇺🇸)');
+    bot.sendMessage(chatId, '/link <ссылка> : создать короткую ссылку (🇷🇺)');
+    bot.sendMessage(chatId, '/once_available_link <ссылка> : создать короткую и единожды доступную ссылку (🇷🇺)');    
+    bot.sendMessage(chatId, '/private_link <ссылка> : создать короткую и привтную(доступную только в приватном[инкогнито] режиме браузера) ссылку (🇷🇺)');
+    bot.sendMessage(chatId, '/private_link <ссылка> : создать короткую и привтную(доступную только в приватном[инкогнито] режиме браузера) ссылку (🇷🇺)');
+    bot.sendMessage(chatId, 'Также бот доступен прямиком из диалога в другой бессде!');
 }
 
 module.exports.getShortLink = (bot) => async (msg, match) => {
@@ -85,7 +100,7 @@ module.exports.inlineQuery = (bot) => async (msg) => {
     let InlineQueryResultShortLink = {
         'type': 'article', 
         'id': +Date.now(),
-        'title': 'Short Link',
+        'title': '🇺🇸 Short Link (🇷🇺 Короткая ссылка)',
         'input_message_content': {
             'message_text': shortLink,
             'disable_web_page_preview': true
@@ -95,7 +110,7 @@ module.exports.inlineQuery = (bot) => async (msg) => {
     let InlineQueryResultPrivateShortLink = {
         'type': 'article', 
         'id': +Date.now() + 1,
-        'title': 'Private Short Link',
+        'title': '🇺🇸 Private Short Link (🇷🇺 Приватная и Короткая ссылка)',
         'input_message_content': {
             'message_text': privateShortLink,
             'disable_web_page_preview': true
@@ -105,7 +120,7 @@ module.exports.inlineQuery = (bot) => async (msg) => {
     let InlineQueryResultOnceAvailableShortLink = {
         'type': 'article', 
         'id': +Date.now() + 2,
-        'title': 'Once available Short Link',
+        'title': '🇺🇸 Once available Short Link (🇷🇺 Единожды доступная и Короткая ссылка)',
         'input_message_content': {
             'message_text': onceAvailableLink,
             'disable_web_page_preview': true

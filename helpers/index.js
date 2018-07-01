@@ -11,5 +11,11 @@ module.exports = {
             'photo_width': 200,
             'photo_height': 200
         }
+    },
+    cmd: {
+        start: {
+            ru: `🇷🇺 Вас приветствуйте <b>ELSHARE BOT</b>.C моей помощью вы можете легко создовать <b>короткие</b> ссылик,<b>приватные</b> ссылки (ссылки которые можно открыть в приватном(инкогнито) режиме),ссылки , которые будут доступны <b>единожды</b>`,
+            en: `🇺🇸 You are welcome <b> ELSHARE BOT </b> .With my help, you can easily create <b> short </b> link, <b> private </b> links (links that can be opened from private (incognito) mode), links that will be available <b> once </b>`
+        }   
     }
 }
