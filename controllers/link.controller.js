@@ -17,14 +17,15 @@ module.exports.getStartInfo = (bot) => async (msg) => {
 
 module.exports.getHelpInfo = (bot) => async (msg) => {
     const chatId = msg.chat.id;
-    bot.sendMessage(chatId, '/link <link> : create short link (🇺🇸)');
-    bot.sendMessage(chatId, '/once_available_link <link> : create short and once available link (🇺🇸)');
-    bot.sendMessage(chatId, '/private_link <link> : create short and private(wich available from private[incognito] browser mode) link (🇺🇸)');
-    bot.sendMessage(chatId, '/link <ссылка> : создать короткую ссылку (🇷🇺)');
-    bot.sendMessage(chatId, '/once_available_link <ссылка> : создать короткую и единожды доступную ссылку (🇷🇺)');    
-    bot.sendMessage(chatId, '/private_link <ссылка> : создать короткую и привтную(доступную только в приватном[инкогнито] режиме браузера) ссылку (🇷🇺)');
-    bot.sendMessage(chatId, '/private_link <ссылка> : создать короткую и привтную(доступную только в приватном[инкогнито] режиме браузера) ссылку (🇷🇺)');
-    bot.sendMessage(chatId, 'Также бот доступен прямиком из диалога в другой бессде!');
+    bot.sendMessage(chatId, cmd.help.en, {
+        parse_mode: 'html'
+    });
+    bot.sendMessage(chatId, cmd.help.ru,{
+        parse_mode: 'html'
+    });
+    bot.sendPhoto(chatId,require('fs').readFileSync('./utils/photo/inline_exmp_1.png'), {
+        caption: '🇺🇸 Bot available as inline query from any chat. Just enter @easy_link_service_bot <link> (🇷🇺 Бот доступен из других чатов. Введи @easy_link_service_bot <ссылка> )'
+    });
 }
 
 module.exports.getShortLink = (bot) => async (msg, match) => {
