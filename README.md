@@ -2,6 +2,6 @@
 
 >**npm run pm2-start**
 
-# Start withous pm2
+# Start with pm2
 
 >**start-prod**
